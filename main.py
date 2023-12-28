@@ -38,12 +38,13 @@ def make_dir_writable(function, path, exception):
     function(path)
 
 def kill(callback=None):
+    global icon
     if callback != None:
         callback()
     print('process ends.')
     for thread in THREADING:
         pass
-    ICON.stop()
+    icon.stop()
 
 def mainloop():
     foldersize_history = []
@@ -143,5 +144,5 @@ THREADING.append(iter_thread)
 
 image = Image.open("icon.jpg")
 menu = (item('exit', kill), item('exit', kill))
-ICON = pystray.Icon("name", image, "title", menu)
-ICON.run()
+icon = pystray.Icon("name", image, "title", menu)
+icon.run()
