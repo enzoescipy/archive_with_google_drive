@@ -47,17 +47,16 @@ def kill(callback=None):
     icon.stop()
 
 def mainloop():
-    foldersize_history = []
-    def get_size(start_path):
+    def get_size(start_path, do_ignore=True):
         total_size = 0
         for direct_path in os.listdir(start_path):
             full_path = os.path.join(start_path, direct_path)
-            if direct_path in IGNORED_FILE + IGNORED_FOLDER:
+            if do_ignore == True and direct_path in IGNORED_FILE + IGNORED_FOLDER:
                 continue
             elif os.path.isdir(full_path):
                 for dirpath, dirnames, filenames in os.walk(full_path):
                     for f in filenames:
-                        if f in IGNORED_FILE:
+                        if do_ignore == True and f in IGNORED_FILE:
                             continue
                         fp = os.path.join(dirpath, f)
                         # skip if it is symbolic link
@@ -113,17 +112,25 @@ def mainloop():
             else:
                 os.remove(full_path)
         
+    foldersize_history_pure = []
+    foldersize_history_all = []
     while True:
         try:
             print("i am iter")
-            foldersize_history.append(get_size(inspect_path))
-            if len(foldersize_history) > EVERY:
-                foldersize_history.pop(0)
-                if foldersize_history[0] != 0 and foldersize_history.count(foldersize_history[0]) >= EVERY:
-                    archive(archive_path, inspect_path, foldersize_history[0])
+            foldersize_history_pure.append(get_size(inspect_path))
+            foldersize_history_all.append(get_size(inspect_path, do_ignore=False))
+            if len(foldersize_history_all) > EVERY:
+                foldersize_history_all.pop(0)
+            if len(foldersize_history_pure) > EVERY:
+                foldersize_history_pure.pop(0)
+                if (foldersize_history_pure[0] != 0 and foldersize_history_pure.count(foldersize_history_pure[0]) >= EVERY) \
+                    and (foldersize_history_all.count(foldersize_history_all[0]) >= EVERY):
+                    archive(archive_path, inspect_path, foldersize_history_pure[0])
                     print("archive succeed.")
-                    foldersize_history.clear()
-            print(foldersize_history)
+                    foldersize_history_pure.clear()
+                    
+            print("pure : ", foldersize_history_pure)
+            print("with downloadings : " , foldersize_history_all)
             time.sleep(60*CYCLE)
         except Exception:
             try:
