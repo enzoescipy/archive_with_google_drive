@@ -143,5 +143,5 @@ THREADING.append(iter_thread)
 
 image = Image.open("icon.jpg")
 menu = (item('exit', kill), item('exit', kill))
-icon = pystray.Icon("name", image, "title", menu)
-icon.run()
+ICON = pystray.Icon("name", image, "title", menu)
+ICON.run()
