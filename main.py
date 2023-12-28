@@ -15,8 +15,8 @@ import stat
 THREADING = []
 THREADING:List[threading.Thread]
 
-CYCLE = 0.025 # n minute, each.
-EVERY = 5 # if the folder size is not changing for 5 cycle, then execute the "folder moving"
+CYCLE = 0.5 # n minute, each.
+EVERY = 10 # if the folder size is not changing for 5 cycle, then execute the "folder moving"
 MAX_SIZE = 300.0 # n GigaByte, each.
 
 # ignore files in the inspect_path. those files will be gently ignored while replacing other files and folders.
@@ -27,8 +27,8 @@ IGNORED_FILE = ['desktop.ini',]
 IGNORED_FOLDER = ['.tmp.drivedownload', '.tmp.driveupload',] 
 
 # inspect_path = './test' # this could be the cloud drive service's storage folder.
-inspect_path = 'C:/Users/asdfg/내 드라이브(enzoescipy@gmail.com)' # this could be the cloud drive service's storage folder.
-archive_path = './archive' # this is where your files are stored.
+inspect_path = 'D:/stream_drive_google' # this could be the cloud drive service's storage folder.
+archive_path = 'D:/ARCHIVE_stream' # this is where your files are stored.
 
 def make_dir_writable(function, path, exception):
     """The path on Windows cannot be gracefully removed due to being read-only,
