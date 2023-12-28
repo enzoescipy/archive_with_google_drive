@@ -43,7 +43,7 @@ def kill(callback=None):
     print('process ends.')
     for thread in THREADING:
         pass
-    icon.stop()
+    ICON.stop()
 
 def mainloop():
     foldersize_history = []
