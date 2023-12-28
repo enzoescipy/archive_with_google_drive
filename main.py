@@ -15,7 +15,7 @@ import stat
 THREADING = []
 THREADING:List[threading.Thread]
 
-CYCLE = 0.5 # n minute, each.
+CYCLE = 3 # n minute, each.
 EVERY = 10 # if the folder size is not changing for 5 cycle, then execute the "folder moving"
 MAX_SIZE = 300.0 # n GigaByte, each.
 
